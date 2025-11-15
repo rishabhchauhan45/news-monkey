@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 
-export class News extends Component { // Capital 'N' का ध्यान रखें
-
+export class News extends Component { 
   
  
  constructor() {
@@ -30,7 +29,12 @@ let url = "https://newsdata.io/api/1/latest?apikey=pub_1136e01a11c34ae482238053f
         console.error("Error fetching data:", error);
     }
 }
-
+handlePrevClick = ()=>{
+console.log("previous")
+}
+handleNextClick = ()=>{
+console.log("next")
+}
   render() {
     console.log("render");
     return (
@@ -48,7 +52,10 @@ let url = "https://newsdata.io/api/1/latest?apikey=pub_1136e01a11c34ae482238053f
         </div>
     })}
 </div>
-        
+        <div className="container d-flex justify-content-between" >
+          <button type="button" class="btn btn-dark" onClick={this.handleNextClick}> &larr; previous</button>
+          <button type="button" class="btn btn-dark" onClick={this.handleNextClick}> Next &rarr;</button>
+        </div>
       </div>
     )
   }
