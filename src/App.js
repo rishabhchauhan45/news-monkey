@@ -1,37 +1,60 @@
-
 import './App.css';
 import React, { Component } from 'react';
 import Navbar from './components/Navbar';
 import News from './components/News';
 
-// React Router को इम्पोर्ट करें
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
-
 export default class App extends Component {
+  state = {
+    category: 'general',
+    searchTerm: '',
+    theme: 'light',
+    country: 'in' // Country state ko 'in' (India) set kiya
+  }
+
+  setCategory = (newCategory) => {
+    this.setState({ category: newCategory, searchTerm: '' });
+  }
+
+  handleSearchChange = (event) => {
+    this.setState({ searchTerm: event.target.value });
+  }
+
+  handleSearchSubmit = (event) => {
+    event.preventDefault();
+    this.setState({});
+  }
+
+  toggleTheme = () => {
+    this.setState(prevState => ({
+      theme: prevState.theme === 'light' ? 'dark' : 'light'
+    }));
+  }
+
+  setCountryFilter = (newCountry) => {
+    this.setState({ country: newCountry, searchTerm: '' }); // Country बदलने पर search term reset karein
+  }
+
   render() {
     return (
-     
-      <Router>
-        <div>
-          <Navbar />
-          
-          <Routes>
-          
-            <Route exact path="/" element={<News key="general" pageSize={8} country="in" category="general" />} />
-            <Route exact path="/business" element={<News key="business" pageSize={8} country="in" category="business" />} />
-            <Route exact path="/entertainment" element={<News key="entertainment" pageSize={8} country="in" category="entertainment" />} />
-            <Route exact path="/general" element={<News key="general-link" pageSize={8} country="in" category="general" />} />
-            <Route exact path="/health" element={<News key="health" pageSize={8} country="in" category="health" />} />
-            <Route exact path="/science" element={<News key="science" pageSize={8} country="in" category="science" />} />
-            <Route exact path="/sports" element={<News key="sports" pageSize={8} country="in" category="sports" />} />
-            <Route exact path="/technology" element={<News key="technology" pageSize={8} country="in" category="technology" />} />
-          </Routes>
-        </div>
-      </Router>
+      <div className={`app-container ${this.state.theme}`}>
+        <Navbar 
+          setCategory={this.setCategory} 
+          searchTerm={this.state.searchTerm}
+          handleSearchChange={this.handleSearchChange}
+          handleSearchSubmit={this.handleSearchSubmit}
+          theme={this.state.theme}
+          toggleTheme={this.toggleTheme}
+          setCountryFilter={this.setCountryFilter} // Navbar ko setCountryFilter function pass kiya
+          currentCountry={this.state.country} // Navbar ko current country pass kiya
+        />
+        <News 
+          key={this.state.category + this.state.searchTerm + this.state.theme + this.state.country} // Key ko country ke saath update kiya
+          category={this.state.category} 
+          searchTerm={this.state.searchTerm}
+          theme={this.state.theme}
+          country={this.state.country} // News component ko country pass kiya
+        />
+      </div>
     );
   }
 }
