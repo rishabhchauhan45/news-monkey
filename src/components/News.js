@@ -40,7 +40,8 @@ export class News extends Component {
              this.setState({ loading: true });
         }
 
-        const apiKey = "pub_1136e01a11c34ae482238053f60f2961";
+        // ✅✅✅ यहाँ पर नयी API KEY है ✅✅✅
+        const apiKey = "pub_d0458dce84234eb791b9b3021216ede2";
         
         let url = `https://newsdata.io/api/1/latest?apikey=${apiKey}&language=en`;
         
@@ -55,9 +56,6 @@ export class News extends Component {
             url += `&q=${encodeURIComponent(this.props.searchTerm)}`;
         } else {
             // If no search term, try to use NewsData.io's 'category' parameter directly
-            // NewsData.io has a specific list of categories.
-            // If the current category is 'general', we can use a generic query 'q'
-            // rather than a specific 'category' parameter which might be restrictive.
             
             const newsDataIoCategories = ['business', 'entertainment', 'health', 'science', 'sports', 'technology'];
             
@@ -80,6 +78,10 @@ export class News extends Component {
             let data = await fetch(url);
             let parsedData = await data.json();
             
+            if (parsedData.status === 'error') {
+                 throw new Error(parsedData.message || "API Error");
+            }
+
             if (parsedData.results && parsedData.results.length > 0) {
                 const newArticles = pageNumberOrToken ? this.state.articles.concat(parsedData.results) : parsedData.results;
                 
@@ -102,7 +104,7 @@ export class News extends Component {
                 articles: [], 
                 loading: false, 
                 nextPage: null, 
-                error: "An error occurred while fetching news. Please check your internet connection or try again later." 
+                error: error.message || "An error occurred while fetching news. Please check your internet connection or try again later." 
             });
         }
     }
@@ -127,21 +129,44 @@ export class News extends Component {
 
     render() {
         let { theme } = this.props;
-        // Determine the title based on search term, category and country
-        let displayTitle = "Top ";
-        if (this.props.searchTerm) {
-            displayTitle += `Search Results for "${this.props.searchTerm}"`;
-        } else if (this.props.category === 'general') {
-            displayTitle += `General`;
-        } else {
-            displayTitle += `${this.props.category}`;
-        }
-        displayTitle += ` Headlines in ${this.props.country.toUpperCase()}`;
-
-
+        
         return (
             <div className={`container my-3 text-${theme === 'light' ? 'dark' : 'light'}`}>
-                <h1 className="text-center" style={{ margin: '35px 0px' }}>NewsMonkey - {displayTitle}</h1>
+                
+                {/* ✅✅✅ नई हेडिंग (बैज स्टाइल) यहाँ है ✅✅✅ */}
+                <h1 className="text-center my-4 d-flex align-items-center justify-content-center flex-wrap gap-2" style={{margin: '35px 0px'}}>
+                  <span className="fw-bold" style={{color: theme === 'light' ? '#0d6efd' : '#6ea8fe'}}>NewsMonkey:</span>
+                  
+                  {this.props.searchTerm ? (
+                      // अगर सर्च किया गया है तो ऐसा दिखेगा
+                      <>
+                        <span>Search Results for</span>
+                        <span className="badge rounded-pill bg-warning text-dark px-3 py-2" style={{fontSize: '1rem'}}>
+                            "{this.props.searchTerm}"
+                        </span>
+                      </>
+                  ) : (
+                      // अगर कैटेगरी है तो ऐसा दिखेगा
+                      <>
+                        <span>Top</span>
+                        {/* कैटेगरी बैज */}
+                        <span className="badge rounded-pill bg-primary px-3 py-2 text-capitalize" style={{fontSize: '1rem'}}>
+                            {this.props.category === 'general' ? 'General' : this.props.category}
+                        </span>
+                        <span>Headlines</span>
+                      </>
+                  )}
+                  
+                  <span>in</span>
+                  
+                  {/* कंट्री बैज */}
+                 {/* कैटेगरी बैज - fw-bold जोड़ा गया */}
+<span className="badge rounded-pill bg-primary px-3 py-2 text-capitalize fw-bold" style={{fontSize: '1rem'}}>
+    {this.props.category === 'general' ? 'General' : this.props.category}
+</span>
+                </h1>
+                {/* ✅✅✅ नई हेडिंग ख़त्म ✅✅✅ */}
+
                 
                 {this.state.loading && this.state.articles.length === 0 && !this.state.error && <Spinner />}
                 
@@ -150,7 +175,7 @@ export class News extends Component {
                         <h4 className="alert-heading">NewsMonkey - Error</h4>
                         <p>{this.state.error}</p>
                         <hr />
-                        <p className="mb-0">Please try selecting another option.</p>
+                        <p className="mb-0">Please try selecting another option (Country/Category) or check back later.</p>
                     </div>
                 )}
 
@@ -176,13 +201,14 @@ export class News extends Component {
                         <div className="container">
                             <div className="row">
                                 {this.state.articles.map((element) => {
-                                    return <div className="col-md-4" key={element.link || Math.random()}>
+                                    return <div className="col-md-4 mb-4" key={element.link || Math.random()}>
                                         <NewsItem
                                             title={element.title ? element.title : ""}
                                             description={element.description ? element.description : ""}
                                             imageUrl={element.image_url}
                                             newsUrl={element.link}
                                             theme={theme}
+                                            date={element.pubDate}
                                         />
                                     </div>
                                 })}

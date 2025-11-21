@@ -3,76 +3,131 @@ import React, { Component } from 'react';
 
 export class Navbar extends Component {
   render() {
-    let { theme, toggleTheme, setCountryFilter, currentCountry } = this.props;
+    let { theme, toggleTheme, setCountryFilter, currentCountry, currentCategory } = this.props;
     
     const countries = [
-      { code: 'in', name: 'India' },
-      { code: 'us', name: 'USA' },
-      { code: 'gb', name: 'UK' },
-      { code: 'cn', name: 'China' },
-      { code: 'pk', name: 'Pakistan' },
+      { code: 'in', name: 'India', flag: '🇮🇳' },
+      { code: 'us', name: 'USA', flag: '🇺🇸' },
+      { code: 'gb', name: 'UK', flag: '🇬🇧' },
+      { code: 'cn', name: 'China', flag: '🇨🇳' },
+      { code: 'pk', name: 'Pakistan', flag: '🇵🇰' },
     ];
 
+    const isActive = (cat) => currentCategory === cat ? 'active text-decoration-underline' : '';
+
+    // ✅ नया स्टाइल: बहुत मोटा और थोड़ा बड़ा फोंट
+    const navLinkStyle = {
+        fontWeight: '800', // Extra Bold (h3/h2 जैसा मोटा)
+        fontSize: '1.15rem', // थोड़ा बड़ा साइज़
+        letterSpacing: '0.5px'
+    };
+
+    // कंट्री बटन स्टाइल (render के अंदर ही रखा है ताकि props access कर सकें अगर भविष्य में जरूरत हो)
+    const countryBtnStyle = {
+        borderRadius: '30px',
+        background: 'linear-gradient(135deg, #ff9933, #ffffff, #138808)',
+        border: 'none',
+        color: '#212529',
+        fontWeight: 'bold',
+        paddingInline: '20px'
+    };
+
+
     return (
-      <nav className={`navbar navbar-expand-lg ${theme === 'light' ? 'navbar-light bg-light' : 'navbar-dark bg-dark'}`}>
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#top">NewsMonkey</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+      <nav className={`navbar navbar-expand-lg sticky-top shadow ${theme === 'light' ? 'navbar-light bg-white' : 'navbar-dark bg-dark'}`} style={{transition: 'all 0.3s ease'}}>
+        <div className="container-fluid px-lg-5">
+          
+          <a className="navbar-brand fw-bold d-flex align-items-center" href="#top" style={{letterSpacing: '1px', color: 'var(--bs-primary)', fontSize: '1.8rem'}}>
+            NewsMonkey <span className="ms-2 fs-4" role="img" aria-label="monkey">🐵</span>
+            </a>
+            
+          <button className="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" style={{filter: theme === 'dark' ? 'invert(1)' : 'none'}}></span>
           </button>
+
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {/* fw-bold हटा दिया क्योंकि अब हम इनलाइन स्टाइल यूज़ कर रहे हैं */}
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center"> 
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#top" onClick={() => this.props.setCategory('general')}>Home</a>
+                {/* ✅ हर लिंक में style={navLinkStyle} जोड़ा गया */}
+                <a className={`nav-link ${isActive('general')}`} aria-current="page" href="#top" onClick={() => this.props.setCategory('general')} style={navLinkStyle}>Home</a>
               </li>
-              <li className="nav-item"><a className="nav-link" href="#top" onClick={() => this.props.setCategory('business')}>Business</a></li>
-              <li className="nav-item"><a className="nav-link" href="#top" onClick={() => this.props.setCategory('entertainment')}>Entertainment</a></li>
-              <li className="nav-item"><a className="nav-link" href="#top" onClick={() => this.props.setCategory('health')}>Health</a></li>
-              <li className="nav-item"><a className="nav-link" href="#top" onClick={() => this.props.setCategory('science')}>Science</a></li>
-              <li className="nav-item"><a className="nav-link" href="#top" onClick={() => this.props.setCategory('sports')}>Sports</a></li>
-              <li className="nav-item"><a className="nav-link" href="#top" onClick={() => this.props.setCategory('technology')}>Technology</a></li>
+              <li className="nav-item">
+                <a className={`nav-link ${isActive('business')}`} href="#top" onClick={() => this.props.setCategory('business')} style={navLinkStyle}>Business</a>
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${isActive('entertainment')}`} href="#top" onClick={() => this.props.setCategory('entertainment')} style={navLinkStyle}>Entertainment</a>
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${isActive('health')}`} href="#top" onClick={() => this.props.setCategory('health')} style={navLinkStyle}>Health</a>
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${isActive('science')}`} href="#top" onClick={() => this.props.setCategory('science')} style={navLinkStyle}>Science</a>
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${isActive('sports')}`} href="#top" onClick={() => this.props.setCategory('sports')} style={navLinkStyle}>Sports</a>
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${isActive('technology')}`} href="#top" onClick={() => this.props.setCategory('technology')} style={navLinkStyle}>Technology</a>
+              </li>
             </ul>
-            <form className="d-flex" role="search" onSubmit={this.props.handleSearchSubmit}>
-                <input
-                    className="form-control me-2"
-                    type="search"
-                    placeholder="Search news..."
-                    aria-label="Search"
-                    value={this.props.searchTerm}
-                    onChange={this.props.handleSearchChange}
-                />
-                <button className={`btn ${theme === 'light' ? 'btn-outline-dark' : 'btn-outline-light'}`} type="submit">Search</button>
-            </form>
+            
+            <div className="d-flex align-items-center">
+                {/* Search Form */}
+                <form className="d-flex my-2 my-lg-0 me-3 align-items-center" role="search" onSubmit={this.props.handleSearchSubmit}>
+                    <input
+                        className="form-control me-2 shadow-sm thick-border-input search-input-hover"
+                        type="search"
+                        placeholder="Search topics..."
+                        aria-label="Search"
+                        value={this.props.searchTerm}
+                        onChange={this.props.handleSearchChange}
+                        style={{borderRadius: '30px', paddingLeft: '20px',width: '250'}}
+                    />
+                    <button className="btn shadow-sm light-search-btn" type="submit" style={{borderRadius: '30px', paddingInline: '25px'}}>
+                        Search 🔍
+                    </button>
+                </form>
 
-            <div className="dropdown mx-2">
-                <button className={`btn dropdown-toggle ${theme === 'light' ? 'btn-outline-dark' : 'btn-outline-light'}`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {countries.find(c => c.code === currentCountry)?.name || 'Country'}
-                </button>
-                <ul className={`dropdown-menu ${theme === 'dark' ? 'dropdown-menu-dark' : ''}`}>
-                    {countries.map((country) => (
-                        <li key={country.code}>
-                            <a 
-                                className={`dropdown-item ${currentCountry === country.code ? 'active' : ''}`} 
-                                href="#top" 
-                                onClick={() => setCountryFilter(country.code)}
-                            >
-                                {country.name}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                {/* Country Dropdown */}
+                <div className="dropdown my-2 my-lg-0 me-3">
+                    <button className="btn dropdown-toggle shadow-sm d-flex align-items-center hover-effect" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={countryBtnStyle}>
+                        <span className="me-2">{countries.find(c => c.code === currentCountry)?.name}</span>
+                        <span style={{fontSize: '1.4rem'}} role="img" aria-label="flag">
+                            {countries.find(c => c.code === currentCountry)?.flag}
+                        </span>
+                    </button>
+                    <ul className={`dropdown-menu shadow border-0 mt-2 ${theme === 'dark' ? 'dropdown-menu-dark' : ''}`} style={{borderRadius: '15px', overflow: 'hidden'}}>
+                        {countries.map((country) => (
+                            <li key={country.code}>
+                                <a 
+                                    className={`dropdown-item d-flex justify-content-between align-items-center py-2 ${currentCountry === country.code ? 'active fw-bold' : ''}`} 
+                                    href="#top" 
+                                    onClick={() => setCountryFilter(country.code)}
+                                >
+                                    <span>{country.name}</span>
+                                    <span style={{fontSize: '1.3rem'}}>{country.flag}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-            <div className={`form-check form-switch mx-3 text-${theme === 'light' ? 'dark' : 'light'}`}>
-              <input 
-                className="form-check-input" 
-                type="checkbox" 
-                role="switch" 
-                id="flexSwitchCheckDefault" 
-                checked={theme === 'dark'}
-                onChange={toggleTheme}
-              />
-              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Dark Mode</label>
+                {/* Dark Mode Toggle */}
+                <div className={`form-check form-switch p-0 m-0 d-flex align-items-center hover-effect`} style={{cursor: 'pointer'}}>
+                    <label className="form-check-label me-2 fs-5" htmlFor="flexSwitchCheckDefault" style={{cursor: 'pointer'}}>
+                        {theme === 'light' ? '☀️' : '🌙'}
+                    </label>
+                    <input 
+                        className="form-check-input m-0" 
+                        type="checkbox" 
+                        role="switch" 
+                        id="flexSwitchCheckDefault" 
+                        checked={theme === 'dark'}
+                        onChange={toggleTheme}
+                        style={{cursor: 'pointer', width: '3rem', height: '1.5rem'}}
+                    />
+                </div>
             </div>
           </div>
         </div>

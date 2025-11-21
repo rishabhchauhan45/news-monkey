@@ -1,39 +1,80 @@
 import React, { Component } from 'react'
 
 export class NewsItem extends Component {
+
+  // शब्दों को गिनकर स्ट्रिंग को छोटा करने के लिए एक हेल्पर फ़ंक्शन
+  truncateDescription = (desc, wordLimit) => {
+    if (!desc) return "";
+    const words = desc.split(" ");
+    if (words.length <= wordLimit) return desc;
+    return words.slice(0, wordLimit).join(" ") + "... ";
+  }
+
   render() {
-    
-    let { title, description, imageUrl, newsUrl } = this.props;
+    let { title, description, imageUrl, newsUrl, theme, date } = this.props;
+
+    // 20 शब्दों तक डिस्क्रिप्शन को छोटा करें
+    let truncatedDescription = this.truncateDescription(description, 20);
+
+    let formattedDate = new Date(date).toLocaleDateString('en-IN', {
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 
     return (
-      <div className="my-3">
-        <div className="card">
-          <img 
-            src={imageUrl ? imageUrl : "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=500&q=60"} 
-            className="card-img-top" 
-            alt="News" 
-          />
-          <div className="card-body">
+      <div className="h-100 my-3">
+        {/* पूरे कार्ड को एक <a> टैग में लपेटा गया है ताकि कहीं भी क्लिक करने पर लिंक खुले। 
+            'news-card-hover' क्लास अब यहाँ है।
+        */}
+        <a 
+            href={newsUrl} 
+            target='_blank' 
+            rel="noreferrer" 
+            className="text-decoration-none text-reset d-block h-100 news-card-hover"
+            style={{perspective: '1000px'}}
+        >
+            <div className={`card h-100 shadow-sm ${theme === 'light' ? 'bg-light text-dark' : 'bg-dark text-light border-secondary'}`} style={{borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s'}}>
             
-            <h5 className="card-title">
-              {title ? title.slice(0, 45) : ""}...
-            </h5>
+            <div style={{ position: 'relative' }}>
+                <img 
+                    src={!imageUrl ? "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-2246192352.jpg?c=16x9&q=w_800,c_fill" : imageUrl} 
+                    className="card-img-top" 
+                    alt="..." 
+                    style={{height: '200px', objectFit: 'cover'}} 
+                />
+                <span className="position-absolute top-0 end-0 badge rounded-pill bg-danger m-2" style={{zIndex: '1', fontSize: '0.8rem'}}>
+                    {new Date(date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                </span>
+            </div>
+            
+            <div className="card-body d-flex flex-column">
+                <h5 className="card-title fw-bold">{title}</h5>
+                
+                {/* डिस्क्रिप्शन */}
+                <p className="card-text flex-grow-1">
+                {truncatedDescription}
+                </p>
+                
+                {/* तारीख और समय */}
+                <p className="card-text">
+                    <small className={`text-${theme === 'light' ? 'muted' : 'secondary'}`}>
+                    Is : {formattedDate}
+                    </small>
+                </p>
 
-            {/* description को 90 अक्षरों तक छोटा किया */}
-            <p className="card-text">
-              {description ? description.slice(0, 90) : ""}...
-            </p>
-            
-            <a 
-              href={newsUrl} 
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-sm btn-dark"
-            >
-              Read More
-            </a>
-          </div>
-        </div>
+                {/* यह एक विज़ुअल (visual) बटन है, असली लिंक बाहरी <a> टैग है।
+                    pointer-events: none ताकि क्लिक आर-पार हो जाए।
+                */}
+                <div className={`btn btn-sm mt-auto w-100 ${theme === 'light' ? 'btn-primary' : 'btn-outline-light'}`} style={{borderRadius: '20px', pointerEvents: 'none'}}> 
+                    Read More &rarr;
+                </div>
+            </div>
+            </div>
+        </a>
       </div>
     )
   }
