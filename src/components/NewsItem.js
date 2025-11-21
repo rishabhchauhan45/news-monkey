@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export class NewsItem extends Component {
 
-  // शब्दों को गिनकर स्ट्रिंग को छोटा करने के लिए एक हेल्पर फ़ंक्शन
+  
   truncateDescription = (desc, wordLimit) => {
     if (!desc) return "";
     const words = desc.split(" ");
@@ -13,7 +13,7 @@ export class NewsItem extends Component {
   render() {
     let { title, description, imageUrl, newsUrl, theme, date } = this.props;
 
-    // 20 शब्दों तक डिस्क्रिप्शन को छोटा करें
+  
     let truncatedDescription = this.truncateDescription(description, 20);
 
     let formattedDate = new Date(date).toLocaleDateString('en-IN', {
@@ -27,9 +27,7 @@ export class NewsItem extends Component {
 
     return (
       <div className="h-100 my-3">
-        {/* पूरे कार्ड को एक <a> टैग में लपेटा गया है ताकि कहीं भी क्लिक करने पर लिंक खुले। 
-            'news-card-hover' क्लास अब यहाँ है।
-        */}
+      
         <a 
             href={newsUrl} 
             target='_blank' 
@@ -54,21 +52,18 @@ export class NewsItem extends Component {
             <div className="card-body d-flex flex-column">
                 <h5 className="card-title fw-bold">{title}</h5>
                 
-                {/* डिस्क्रिप्शन */}
+                
                 <p className="card-text flex-grow-1">
                 {truncatedDescription}
                 </p>
-                
-                {/* तारीख और समय */}
+          
                 <p className="card-text">
                     <small className={`text-${theme === 'light' ? 'muted' : 'secondary'}`}>
                     Is : {formattedDate}
                     </small>
                 </p>
 
-                {/* यह एक विज़ुअल (visual) बटन है, असली लिंक बाहरी <a> टैग है।
-                    pointer-events: none ताकि क्लिक आर-पार हो जाए।
-                */}
+               
                 <div className={`btn btn-sm mt-auto w-100 ${theme === 'light' ? 'btn-primary' : 'btn-outline-light'}`} style={{borderRadius: '20px', pointerEvents: 'none'}}> 
                     Read More &rarr;
                 </div>

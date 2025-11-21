@@ -1,69 +1,21 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-/* =========================================
-   Base App Container & Theming
-   ========================================= */
 .app-container {
-  min-height: 100vh; /* पूरे ऐप की कम से कम ऊंचाई स्क्रीन के बराबर हो */
-  transition: background-color 0.3s ease, color 0.3s ease; /* थीम बदलने पर स्मूथ ट्रांज़िशन */
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- Light Theme --- */
 .app-container.light {
-  background-color: #f0f2f5; /* थोड़ा सा ऑफ-व्हाइट बैकग्राउंड */
-  color: #212529; /* डार्क टेक्स्ट */
+  background-color: #f0f2f5;
+  color: #212529;
 }
 
-/* --- Dark Theme --- */
 .app-container.dark {
-  background-color: #18191a; /* गहरा डार्क बैकग्राउंड */
-  color: #e4e6eb; /* लाइट टेक्स्ट */
+  background-color: #18191a;
+  color: #e4e6eb;
 }
 
-
-/* =========================================
-   Navbar Modern Styles
-   ========================================= */
 .navbar {
   padding-top: 0.8rem;
   padding-bottom: 0.8rem;
-  /* नेवबार के नीचे एक हल्की सी लाइन */
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -71,40 +23,34 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ब्रांड नाम (NewsMonkey) का होवर इफ़ेक्ट */
 .navbar-brand {
   font-size: 1.5rem;
   transition: transform 0.3s ease;
 }
 .navbar-brand:hover {
-  transform: scale(1.08); /* होवर पर थोड़ा बड़ा होगा */
+  transform: scale(1.08);
 }
 
-/* --- Nav Links (Home, Business etc.) --- */
 .nav-link {
   position: relative;
-  /* ✅ बदलाव: दाएं-बाएं की पैडिंग 1rem से घटाकर 0.5rem कर दी गई है */
   padding: 0.5rem 0.5rem !important; 
-  margin: 0 0.1rem; /* मार्जिन भी थोड़ा कम किया */
+  margin: 0 0.1rem;
   border-radius: 30px;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
-/* लिंक पर होवर करने पर इफ़ेक्ट */
 .nav-link:hover {
-  transform: translateY(-3px); /* ऊपर उठेगा */
-  background-color: rgba(var(--bs-primary-rgb), 0.1); /* हल्का प्राइमरी बैकग्राउंड */
+  transform: translateY(-3px);
+  background-color: rgba(var(--bs-primary-rgb), 0.1);
 }
 
-/* एक्टिव लिंक का स्टाइल */
 .nav-link.active {
   background-color: var(--bs-primary);
   color: white !important;
-  box-shadow: 0 4px 8px rgba(var(--bs-primary-rgb), 0.4); /* ग्लो इफ़ेक्ट */
+  box-shadow: 0 4px 8px rgba(var(--bs-primary-rgb), 0.4);
 }
 
-/* डार्क मोड में लिंक्स के रंग का एडजस्टमेंट */
 .app-container.dark .navbar-dark .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 0.85);
 }
@@ -113,41 +59,27 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-
-/* =========================================
-   Utility Classes & Buttons
-   ========================================= */
-
-/* --- General "Bounce/Lift" Hover Effect --- */
-/* (Country Dropdown, Dark Mode Toggle, etc. के लिए) */
 .hover-effect {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* थोड़ा बाउंस इफ़ेक्ट */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .hover-effect:hover {
-  transform: translateY(-3px) scale(1.02); /* ऊपर उठेगा और थोड़ा बड़ा होगा */
+  transform: translateY(-3px) scale(1.02);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 .hover-effect:active {
-  transform: translateY(1px) scale(0.98); /* क्लिक करने पर दबेगा */
+  transform: translateY(1px) scale(0.98);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-/* =========================================
-   Search Bar Styles
-   ========================================= */
-
-/* --- मोटा बॉर्डर वाला सर्च इनपुट --- */
 .thick-border-input {
-  border: 2.5px solid #ced4da !important; /* मोटा बॉर्डर */
+  border: 2.5px solid #ced4da !important;
   transition: all 0.3s ease;
 }
 .thick-border-input:focus {
-  border-color: var(--bs-primary) !important; /* फोकस पर प्राइमरी कलर */
+  border-color: var(--bs-primary) !important;
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25) !important;
 }
 
-/* डार्क मोड में इनपुट का स्टाइल */
 .app-container.dark .thick-border-input {
   background-color: #3a3b3c;
   border-color: #495057 !important;
@@ -160,74 +92,59 @@
   border-color: #0d6efd !important;
 }
 
-
-/* --- लाइट कलर वाला सर्च बटन --- */
 .light-search-btn {
-  background-color: #f0f2f5; /* बहुत हल्का ग्रे */
-  color: #212529; /* डार्क टेक्स्ट */
+  background-color: #f0f2f5;
+  color: #212529;
   border: 2px solid #e9ecef;
   font-weight: 700;
   transition: all 0.3s ease;
 }
 .light-search-btn:hover {
-  background-color: #e9ecef; /* होवर पर थोड़ा गहरा */
+  background-color: #e9ecef;
   border-color: #dee2e6;
-  transform: translateY(-3px); /* ऊपर उठेगा */
+  transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
-
-/* =========================================
-   News Card Styles
-   ========================================= */
-
-/* --- न्यूज़ कार्ड के लिए "हिलने" (Lift & Shadow) वाला इफ़ेक्ट --- */
 .news-card-hover {
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* स्मूथ ट्रांज़िशन */
-  border: none; /* डिफ़ॉल्ट बॉर्डर हटाया ताकि शैडो अच्छी लगे */
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: none;
 }
 
 .news-card-hover:hover {
-  transform: translateY(-12px); /* कार्ड काफी ऊपर उठेगा */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important; /* गहरी और बड़ी शैडो */
+  transform: translateY(-12px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
   cursor: pointer;
 }
 
-/* डार्क मोड में कार्ड की शैडो (हल्की सी चमक) */
 .app-container.dark .news-card-hover:hover {
   box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12) !important;
 }
-/* src/App.css */
 
-/* ... (पुराने स्टाइल्स के नीचे) ... */
-
-/* --- सर्च इनपुट के लिए होवर इफ़ेक्ट --- */
 .search-input-hover {
   transition: all 0.3s ease;
 }
 
 .search-input-hover:hover {
-  transform: translateY(-2px); /* थोड़ा सा ऊपर उठेगा */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important; /* गहरी शैडो */
-  border-color: #adb5bd !important; /* बॉर्डर थोड़ा गहरा होगा */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
+  border-color: #adb5bd !important;
 }
 
-/* डार्क मोड में होवर इफ़ेक्ट */
 .app-container.dark .search-input-hover:hover {
-    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1) !important; /* डार्क मोड शैडो */
-    border-color: #6c757d !important; /* डार्क मोड बॉर्डर */
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1) !important;
+    border-color: #6c757d !important;
 }
-/* कैटेगरी के लिए हरा/नीला ग्रेडिएंट */
+
 .highlight-category {
   background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
   background-repeat: no-repeat;
-  background-size: 100% 30%; /* केवल नीचे का 30% हाइलाइट होगा */
+  background-size: 100% 30%;
   background-position: bottom;
   padding: 0 5px;
   transition: background-size 0.3s ease;
 }
 
-/* देश के लिए पीला/नारंगी ग्रेडिएंट */
 .highlight-country {
   background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   background-repeat: no-repeat;
@@ -236,7 +153,6 @@
   padding: 0 5px;
 }
 
-/* होवर करने पर पूरा भर जाएगा (Optional) */
 .highlight-category:hover, .highlight-country:hover {
     background-size: 100% 100%;
 }

@@ -40,32 +40,25 @@ export class News extends Component {
              this.setState({ loading: true });
         }
 
-        // ✅✅✅ यहाँ पर नयी API KEY है ✅✅✅
         const apiKey = "pub_d0458dce84234eb791b9b3021216ede2";
         
         let url = `https://newsdata.io/api/1/latest?apikey=${apiKey}&language=en`;
         
-        // Country parameter
         if (this.props.country) {
             url += `&country=${this.props.country}`;
         }
 
-        // Category or Search Term as 'q' parameter or 'category' parameter
         if (this.props.searchTerm) {
-            // If there's a search term, use it as the main query 'q'
             url += `&q=${encodeURIComponent(this.props.searchTerm)}`;
         } else {
-            // If no search term, try to use NewsData.io's 'category' parameter directly
             
             const newsDataIoCategories = ['business', 'entertainment', 'health', 'science', 'sports', 'technology'];
             
             if (this.props.category === 'general') {
-                url += `&q=${encodeURIComponent('latest news')}`; // Generic query for home/general
+                url += `&q=${encodeURIComponent('latest news')}`; 
             } else if (newsDataIoCategories.includes(this.props.category)) {
-                // If our category matches NewsData.io's list, use their 'category' parameter
                 url += `&category=${this.props.category}`;
             } else {
-                // Fallback: if category is not general and not in NewsData.io's list, use it as 'q'
                 url += `&q=${encodeURIComponent(this.props.category + ' news')}`; 
             }
         }
@@ -133,12 +126,10 @@ export class News extends Component {
         return (
             <div className={`container my-3 text-${theme === 'light' ? 'dark' : 'light'}`}>
                 
-                {/* ✅✅✅ नई हेडिंग (बैज स्टाइल) यहाँ है ✅✅✅ */}
                 <h1 className="text-center my-4 d-flex align-items-center justify-content-center flex-wrap gap-2" style={{margin: '35px 0px'}}>
                   <span className="fw-bold" style={{color: theme === 'light' ? '#0d6efd' : '#6ea8fe'}}>NewsMonkey:</span>
                   
                   {this.props.searchTerm ? (
-                      // अगर सर्च किया गया है तो ऐसा दिखेगा
                       <>
                         <span>Search Results for</span>
                         <span className="badge rounded-pill bg-warning text-dark px-3 py-2" style={{fontSize: '1rem'}}>
@@ -146,10 +137,8 @@ export class News extends Component {
                         </span>
                       </>
                   ) : (
-                      // अगर कैटेगरी है तो ऐसा दिखेगा
                       <>
                         <span>Top</span>
-                        {/* कैटेगरी बैज */}
                         <span className="badge rounded-pill bg-primary px-3 py-2 text-capitalize" style={{fontSize: '1rem'}}>
                             {this.props.category === 'general' ? 'General' : this.props.category}
                         </span>
@@ -159,13 +148,10 @@ export class News extends Component {
                   
                   <span>in</span>
                   
-                  {/* कंट्री बैज */}
-                 {/* कैटेगरी बैज - fw-bold जोड़ा गया */}
 <span className="badge rounded-pill bg-primary px-3 py-2 text-capitalize fw-bold" style={{fontSize: '1rem'}}>
     {this.props.category === 'general' ? 'General' : this.props.category}
 </span>
                 </h1>
-                {/* ✅✅✅ नई हेडिंग ख़त्म ✅✅✅ */}
 
                 
                 {this.state.loading && this.state.articles.length === 0 && !this.state.error && <Spinner />}

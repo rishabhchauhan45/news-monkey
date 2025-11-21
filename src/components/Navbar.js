@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+
 
 export class Navbar extends Component {
   render() {
@@ -15,14 +15,14 @@ export class Navbar extends Component {
 
     const isActive = (cat) => currentCategory === cat ? 'active text-decoration-underline' : '';
 
-    // ✅ नया स्टाइल: बहुत मोटा और थोड़ा बड़ा फोंट
+  
     const navLinkStyle = {
-        fontWeight: '800', // Extra Bold (h3/h2 जैसा मोटा)
-        fontSize: '1.15rem', // थोड़ा बड़ा साइज़
+        fontWeight: '800', 
+        fontSize: '1.15rem', 
         letterSpacing: '0.5px'
     };
 
-    // कंट्री बटन स्टाइल (render के अंदर ही रखा है ताकि props access कर सकें अगर भविष्य में जरूरत हो)
+    
     const countryBtnStyle = {
         borderRadius: '30px',
         background: 'linear-gradient(135deg, #ff9933, #ffffff, #138808)',
@@ -46,10 +46,10 @@ export class Navbar extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {/* fw-bold हटा दिया क्योंकि अब हम इनलाइन स्टाइल यूज़ कर रहे हैं */}
+
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center"> 
               <li className="nav-item">
-                {/* ✅ हर लिंक में style={navLinkStyle} जोड़ा गया */}
+               
                 <a className={`nav-link ${isActive('general')}`} aria-current="page" href="#top" onClick={() => this.props.setCategory('general')} style={navLinkStyle}>Home</a>
               </li>
               <li className="nav-item">
@@ -73,7 +73,7 @@ export class Navbar extends Component {
             </ul>
             
             <div className="d-flex align-items-center">
-                {/* Search Form */}
+             
                 <form className="d-flex my-2 my-lg-0 me-3 align-items-center" role="search" onSubmit={this.props.handleSearchSubmit}>
                     <input
                         className="form-control me-2 shadow-sm thick-border-input search-input-hover"
@@ -89,7 +89,6 @@ export class Navbar extends Component {
                     </button>
                 </form>
 
-                {/* Country Dropdown */}
                 <div className="dropdown my-2 my-lg-0 me-3">
                     <button className="btn dropdown-toggle shadow-sm d-flex align-items-center hover-effect" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={countryBtnStyle}>
                         <span className="me-2">{countries.find(c => c.code === currentCountry)?.name}</span>
@@ -113,7 +112,7 @@ export class Navbar extends Component {
                     </ul>
                 </div>
 
-                {/* Dark Mode Toggle */}
+              
                 <div className={`form-check form-switch p-0 m-0 d-flex align-items-center hover-effect`} style={{cursor: 'pointer'}}>
                     <label className="form-check-label me-2 fs-5" htmlFor="flexSwitchCheckDefault" style={{cursor: 'pointer'}}>
                         {theme === 'light' ? '☀️' : '🌙'}

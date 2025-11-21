@@ -8,7 +8,7 @@ export default class App extends Component {
     category: 'general',
     searchTerm: '',
     theme: 'light',
-    country: 'in' // Country state ko 'in' (India) set kiya
+    country: 'in' 
   }
 
   setCategory = (newCategory) => {
@@ -31,7 +31,7 @@ export default class App extends Component {
   }
 
   setCountryFilter = (newCountry) => {
-    this.setState({ country: newCountry, searchTerm: '' }); // Country बदलने पर search term reset karein
+    this.setState({ country: newCountry, searchTerm: '' }); 
   }
 
   render() {
@@ -44,15 +44,15 @@ export default class App extends Component {
           handleSearchSubmit={this.handleSearchSubmit}
           theme={this.state.theme}
           toggleTheme={this.toggleTheme}
-          setCountryFilter={this.setCountryFilter} // Navbar ko setCountryFilter function pass kiya
-          currentCountry={this.state.country} // Navbar ko current country pass kiya
+          setCountryFilter={this.setCountryFilter} 
+          currentCountry={this.state.country} 
         />
         <News 
-          key={this.state.category + this.state.searchTerm + this.state.theme + this.state.country} // Key ko country ke saath update kiya
+          key={this.state.category + this.state.searchTerm + this.state.theme + this.state.country} 
           category={this.state.category} 
           searchTerm={this.state.searchTerm}
           theme={this.state.theme}
-          country={this.state.country} // News component ko country pass kiya
+          country={this.state.country} 
         />
       </div>
     );
